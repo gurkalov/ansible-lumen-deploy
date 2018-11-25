@@ -1,0 +1,25 @@
+---
+- name: Remove old build
+  file:
+    path: "{{ build_filename }}.{{ build_format }}"
+    state: absent
+  delegate_to: localhost
+  run_once: true
+
+- name: Composer install
+  command: "{{ command_composer_install }}"
+  environment:
+    APP_ENV: local
+  args:
+    chdir: "{{ app_src }}"
+  delegate_to: localhost
+  run_once: true
+  when: true
+
+- name: Create new build
+  archive:
+    path: "{{ app_directories }}"
+    dest: "{{ build_filename }}.{{ build_format }}"
+    format: "{{ build_format }}"
+  delegate_to: localhost
+  run_once: true

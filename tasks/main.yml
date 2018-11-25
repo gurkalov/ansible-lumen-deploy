@@ -1,0 +1,23 @@
+---
+# tasks file for lumen_deploy
+- include: struct.yml
+  tags: setup
+
+- include: dependency.yml
+  tags: setup
+
+- include: build.yml
+  tags:
+    - deploy
+    - build
+
+- include: deploy.yml
+  tags: deploy
+
+- include: migrate.yml
+  tags:
+    - setup
+    - migrate
+
+- include: start.yml
+  tags: setup
